@@ -2,6 +2,7 @@ import React from "react";
 import MainContainer from "../Components/Container/MainContainer";
 import NavBar from "../Components/NavItems/NavBar";
 import { Outlet } from "react-router-dom";
+import ComposeButton from "../Components/Container/ComposeButton";
 
 const Root = () => {
   return (
@@ -12,6 +13,7 @@ const Root = () => {
           <Outlet />
         </div>
       </MainContainer>
+      <ComposeButton />
     </>
   );
 };

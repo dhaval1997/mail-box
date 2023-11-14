@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const NavItem = ({ navData }) => {
+
   return (
     <li className="py-1">
       <NavLink
