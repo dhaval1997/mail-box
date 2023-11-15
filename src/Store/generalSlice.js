@@ -4,8 +4,15 @@ const initialState = {
   isLoading: false,
   isComposing: false,
   isReading: false,
-  editorStartContent: { to: "", subject: "", content: "", mini: false },
+  editorStartContent: {
+    to: "",
+    subject: "",
+    content: "",
+    draftId: null,
+    mini: false,
+  },
   editorContent: { to: "", subject: "", content: "" },
+  readingIndex: null,
 };
 
 const generalSlice = createSlice({
@@ -22,35 +29,46 @@ const generalSlice = createSlice({
       state.isComposing = true;
       state.editorStartContent.mini = false;
     },
+    openComposingDraft: (state, action) => {
+      state.editorContent = action.payload.data;
+      state.editorStartContent = action.payload.data;
+      state.isComposing = true;
+    },
     closeCompose: (state) => {
       state.isComposing = false;
-      state.editorStartContent = { ...state.editorContent, mini: true };
+      state.editorStartContent = {
+        ...state.editorContent,
+        mini: true,
+        draftId: state.editorStartContent.draftId,
+      };
     },
-    changeEditorContent: (states, actions) => {
-      if (actions.payload.type === "to") {
-        states.editorContent.to = actions.payload.to;
-      } else if (actions.payload.type === "subject") {
-        states.editorContent.subject = actions.payload.subject;
-      } else if (actions.payload.type === "content") {
-        states.editorContent.content = actions.payload.content;
+    changeEditorContent: (state, action) => {
+      if (action.payload.type === "to") {
+        state.editorContent.to = action.payload.to;
+      } else if (action.payload.type === "subject") {
+        state.editorContent.subject = action.payload.subject;
+      } else if (action.payload.type === "content") {
+        state.editorContent.content = action.payload.content;
       }
     },
-    deletingCompose: (states) => {
-      states.isComposing = false;
-      states.editorContent = { to: "", subject: "", content: "" };
-      states.editorStartContent = {
+    deletingCompose: (state) => {
+      state.isComposing = false;
+      state.editorContent = { to: "", subject: "", content: "" };
+      state.editorStartContent = {
         to: "",
         subject: "",
         content: "",
         mini: false,
       };
     },
-    openReading: (states) => {
-      states.isReading = true;
-      states.isNavOpen = false;
+    openReadingIndex: (state, action) => {
+      state.readingIndex = action.payload.index;
+      state.isReading = true;
+      state.isNavOpen = false;
     },
-    closeReading: (states) => {
-      states.isReading = false;
+    closeReading: (state) => {
+      state.isReading = false;
+      state.readingIndex = null;
     },
   },
 });
@@ -62,7 +80,7 @@ export const {
   closeCompose,
   changeEditorContent,
   deletingCompose,
-  openReading,
+  openReadingIndex,
   closeReading,
 } = generalSlice.actions;
 

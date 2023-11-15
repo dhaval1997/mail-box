@@ -7,6 +7,8 @@ import {
   forgotPasswordFailure,
   clearError,
 } from "./AuthSlice";
+import { startLoading, stopLoading } from "./generalSlice";
+import { getFastMails, getMails } from "./MailAction";
 
 export const loginUser =
   (email, password, apiToken, navigate) => async (dispatch) => {
@@ -141,3 +143,51 @@ export const forgotPassword = (email, apiToken) => async (dispatch) => {
     dispatch(forgotPasswordFailure(error.message));
   }
 };
+
+export function getUserInfo(idToken) {
+  return async (dispatch) => {
+    try {
+      dispatch(startLoading());
+      const reply = await axios.post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAYLfpvm4HItUrb6rxmYb_lnz5-PT2Zsyw`,
+        { idToken }
+      );
+      const newUserInfo = {
+        idToken,
+        name: reply.data.users[0].displayName,
+        email: reply.data.users[0].email,
+        emailVerified: reply.data.users[0].emailVerified,
+        networkEmail: reply.data.users[0].email.replace(/[^a-zA-Z0-9]/gi, ""),
+        photoUrl: reply.data.users[0].photoUrl,
+      };
+      dispatch(getFastMails(newUserInfo.networkEmail));
+      dispatch(getMails(newUserInfo.networkEmail, "update"));
+      dispatch(AuthAction.updateUser({ userInfo: newUserInfo }));
+    } catch (error) {
+      console.log(error);
+    }
+    dispatch(stopLoading());
+  };
+}
+
+export function logoutHandler(networkEmail) {
+  return (dispatch) => {
+    localStorage.removeItem("token");
+    dispatch(
+      AuthAction.updateUser({
+        userInfo: {
+          idToken: "",
+          name: "",
+          email: "",
+          emailVerified: false,
+          networkEmail: "",
+          photoUrl: "",
+        },
+      })
+    );
+    clearInterval(localStorage.getItem("login"));
+    clearInterval(localStorage.getItem("update"));
+    localStorage.removeItem("login");
+    localStorage.removeItem("update");
+  };
+}

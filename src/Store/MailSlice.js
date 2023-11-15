@@ -4,6 +4,8 @@ export const fireBase =
   "https://react-mailbox-3e595-default-rtdb.firebaseio.com";
 
 const initialState = {
+  fireBase,
+  allMails: [],
   inboxMails: [],
   sentMails: [],
   favoriteMails: [],
@@ -15,45 +17,34 @@ const MailSlice = createSlice({
   name: "MailSlice",
   initialState,
   reducers: {
-    // Action creator to add a new mail to the inbox
-    addMailToInbox: (state, action) => {
-      state.inboxMails.push(action.payload);
+    addAllMails(states, actions) {
+      states.allMails = actions.payload.allMails;
     },
-
-    // Action creator to mark a mail as favorite
-    markMailAsFavorite: (state, action) => {
-      const mailId = action.payload;
-      const mailToMark = state.inboxMails.find((mail) => mail.id === mailId);
-      if (mailToMark) {
-        state.favoriteMails.push(mailToMark);
-      }
+    addInboxMails(states, actions) {
+      states.inboxMails = actions.payload.inbox;
     },
-
-    // Action creator to move a mail to trash
-    moveMailToTrash: (state, action) => {
-      const mailId = action.payload;
-      state.inboxMails = state.inboxMails.filter((mail) => mail.id !== mailId);
-      state.trashMails.push(mailId);
+    addSentMails(states, actions) {
+      states.sentMails = actions.payload.sent;
     },
-
-    // Action creator to restore a mail from trash
-    restoreMailFromTrash: (state, action) => {
-      const mailId = action.payload;
-      state.trashMails = state.trashMails.filter((id) => id !== mailId);
-      // Assuming you have a way to retrieve the mail object from the server or elsewhere
-      const restoredMail = fetchMailById(mailId);
-      if (restoredMail) {
-        state.inboxMails.push(restoredMail);
-      }
+    addFavorite(states, actions) {
+      states.favoriteMails = actions.payload.favorite;
+    },
+    addTrashMails(states, actions) {
+      states.trashMails = actions.payload.trash;
+    },
+    addDraftsMails(states, actions) {
+      states.draftsMails = actions.payload.drafts;
     },
   },
 });
 
 export const {
-  addMailToInbox,
-  markMailAsFavorite,
-  moveMailToTrash,
-  restoreMailFromTrash,
+  addAllMails,
+  addInboxMails,
+  addSentMails,
+  addFavorite,
+  addTrashMails,
+  addDraftsMails,
 } = MailSlice.actions;
 
 export default MailSlice.reducer;
