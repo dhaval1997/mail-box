@@ -1,9 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { openCompose } from "../../Store/generalSlice";
 
 const ComposeButton = () => {
+  const dispatch = useDispatch();
   return (
     <button
-      onClick={() => dispatch(GeneralAction.openComposing())}
+      onClick={() => dispatch(openCompose())}
       className=" drop-shadow-lg fixed bottom-7 right-0 -translate-x-1/2 w-16 h-16 bg-blue-500 hover:bg-blue-600 bg-opacity-95 rounded-full"
     >
       <svg
