@@ -51,3 +51,20 @@ export const sendMail = ({
     dispatch(deletingCompose());
   };
 };
+
+// Inside MailAction module
+
+export const someActionToAddMailToInbox = (newMail) => ({
+  type: "SOME_ACTION_TO_ADD_MAIL_TO_INBOX",
+  payload: newMail,
+});
+
+export const someActionToMarkMailAsFavorite = (mailId) => ({
+  type: "SOME_ACTION_TO_MARK_MAIL_AS_FAVORITE",
+  payload: mailId,
+});
+
+export const someActionToDeleteMail = (mailId) => ({
+  type: "SOME_ACTION_TO_DELETE_MAIL",
+  payload: mailId,
+});
