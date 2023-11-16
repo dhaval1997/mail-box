@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { openCompose } from "../../Store/generalSlice";
+import { openCompose } from "../../Store/GeneralSlice";
 
 const ComposeButton = () => {
   const dispatch = useDispatch();

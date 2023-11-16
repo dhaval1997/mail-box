@@ -15,8 +15,8 @@ const initialState = {
   readingIndex: null,
 };
 
-const generalSlice = createSlice({
-  name: "general",
+const GeneralSlice = createSlice({
+  name: "GeneralSlice",
   initialState,
   reducers: {
     startLoading: (state) => {
@@ -78,10 +78,11 @@ export const {
   stopLoading,
   openCompose,
   closeCompose,
+  openComposingDraft,
   changeEditorContent,
   deletingCompose,
   openReadingIndex,
   closeReading,
-} = generalSlice.actions;
+} = GeneralSlice.actions;
 
-export default generalSlice.reducer;
+export default GeneralSlice.reducer;

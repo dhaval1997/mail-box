@@ -1,5 +1,5 @@
 import axios from "axios";
-import { deletingCompose } from "./generalSlice";
+import { deletingCompose } from "./GeneralSlice";
 import { MailAction, fireBase } from "./MailSlice";
 import { getUserInfo, logoutHandler } from "./authActions";
 

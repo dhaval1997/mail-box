@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const fireBase =
   "https://react-mailbox-3e595-default-rtdb.firebaseio.com";
-
 const initialState = {
   fireBase,
   allMails: [],
@@ -38,13 +37,6 @@ const MailSlice = createSlice({
   },
 });
 
-export const {
-  addAllMails,
-  addInboxMails,
-  addSentMails,
-  addFavorite,
-  addTrashMails,
-  addDraftsMails,
-} = MailSlice.actions;
+export const MailAction = MailSlice.actions;
 
 export default MailSlice.reducer;

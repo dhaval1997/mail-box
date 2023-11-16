@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeReading } from "../../Store/generalSlice";
+import { closeReading } from "../../Store/GeneralSlice";
 import HTMLReactParser from "html-react-parser";
 import { deleteMails, updateMails } from "../../Store/MailAction";
 import { useLocation } from "react-router-dom";
@@ -14,8 +14,12 @@ function MailRead() {
   const inboxMails = useSelector((states) => states.mail.inboxMails);
   const trashMails = useSelector((states) => states.mail.trashMails);
 
+  console.log("sentmails: ", sentMails);
+  console.log("inboxMails: ", inboxMails);
+  console.log("trashMails: ", trashMails);
   let readingContent;
   if (location.pathname === "/sent") {
+
     readingContent = sentMails[readingIndex][1];
   } else if (location.pathname === "/trash") {
     readingContent = trashMails[readingIndex][1];
@@ -175,17 +179,9 @@ function MailRead() {
             )}
           </div>
           <div className="flex items-center justify-start space-x-2 mb-6">
-            <img
-              className=" w-14 h-14 drop-shadow-sm rounded-full object-cover"
-              src={`${window.location.origin}${readingContent.senderInfo.photoUrl}`}
-              alt=""
-              onError={(e) =>
-                (e.target.src = readingContent.senderInfo.photoUrl)
-              }
-            />
             <div>
               <p className=" text-slate-800 text-opacity-95 font-medium capitalize">
-                {readingContent.senderInfo.name}
+                {/* {readingContent.senderInfo.name} */}
               </p>
               <p className=" text-sm -mt-1">
                 to {readingContent.editorContent.to}

@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { openComposingDraft } from "../../Store/generalSlice";
+import { openComposingDraft } from "../../Store/GeneralSlice";
 import HTMLReactParser from "html-react-parser";
 
-const MailDraft = ({ data }) => {
+function MailDraft({ data }) {
   const dispatch = useDispatch();
 
   return (
@@ -46,6 +46,6 @@ const MailDraft = ({ data }) => {
       </div>
     </>
   );
-};
+}
 
 export default MailDraft;

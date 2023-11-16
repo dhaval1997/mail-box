@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { openCompose, deletingCompose } from "../../Store/generalSlice";
+import { openCompose, deletingCompose } from "../../Store/GeneralSlice";
 
 const NotificationCompose = () => {
   const dispatch = useDispatch();

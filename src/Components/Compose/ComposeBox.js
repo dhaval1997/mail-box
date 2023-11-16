@@ -4,7 +4,7 @@ import {
   closeCompose,
   changeEditorContent,
   deletingCompose,
-} from "../../Store/generalSlice";
+} from "../../Store/GeneralSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonPrimary from "../Container/ButtonPrimary";
 import ButtonSecondary from "../Container/ButtonSecondary";

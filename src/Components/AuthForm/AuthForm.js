@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginUser, signUpUser, forgotPassword } from "../../Store/authActions";
-import { startLoading, stopLoading } from "../../Store/generalSlice";
+import { AuthAction } from "../../Store/AuthSlice";
+import { startLoading, stopLoading } from "../../Store/GeneralSlice";
+import { getMails } from "../../Store/MailAction";
 
 const AuthForm = () => {
   const [isLogging, setIsLogging] = useState(true);
@@ -21,38 +23,116 @@ const AuthForm = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    dispatch(AuthAction.clearError());
+
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-
     if (!isLogging) {
       const name = nameRef.current.value;
       const confirm = confirmRef.current.value;
-      dispatch(startLoading());
-      dispatch(signUpUser(email, password, name, confirm, apiToken))
-        .then(() => {
+      if (password === confirm) {
+        try {
+          const response = await axios.post(
+            `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiToken}`,
+            {
+              email,
+              password,
+              returnSecureToken: true,
+            }
+          );
+          const idToken = response.data.idToken;
+          await axios.post(
+            `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${apiToken}`,
+            {
+              idToken,
+              displayName: name,
+              returnSecureToken: false,
+            }
+          );
+          e.target.reset();
+          setIsLogging(!isLogging);
+        } catch (error) {
+          console.error("Authentication Error:", error);
+          dispatch(
+            AuthAction.setError("Authentication Error: " + error.message)
+          );
+        } finally {
           dispatch(stopLoading());
-        })
-        .catch((error) => {
-          dispatch(stopLoading());
-          console.error("Signup Error:", error.message);
-        });
+        }
+      } else {
+        alert("Incorrect Confirm Password");
+      }
     } else {
       dispatch(startLoading());
-      dispatch(loginUser(email, password, apiToken, navigate))
-        .then(() => {
-          dispatch(stopLoading());
-        })
-        .catch((error) => {
-          dispatch(stopLoading());
-          console.error("Login Error:", error.message);
-        });
+      try {
+        const response = await axios.post(
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiToken}`,
+          { email, password, returnSecureToken: true }
+        );
+        localStorage.setItem("idToken", response.data.idToken);
+        // setTimeout(() => {
+        //   localStorage.removeItem("isToken");
+        // }, 1000 * 60 * 15);
+        const reply = await axios.post(
+          `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiToken}`,
+          { idToken: response.data.idToken }
+        );
+        const newUserInfo = {
+          idToken: response.data.idToken,
+          name: reply.data.users[0].displayName,
+          email: reply.data.users[0].email,
+          emailVerified: reply.data.users[0].emailVerified,
+          networkEmail: reply.data.users[0].email.replace(/[^a-zA-Z0-9]/gi, ""),
+          photoUrl: reply.data.users[0].photoUrl,
+        };
+        if (!reply.data.users[0].emailVerified.emailVerified) {
+          await axios.post(
+            `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${apiToken}`,
+            { requestType: "VERIFY_EMAIL", idToken: response.data.idToken }
+          );
+        }
+        e.target.reset();
+        dispatch(AuthAction.setUser({ userInfo: newUserInfo }));
+        dispatch(getMails(newUserInfo.networkEmail, "login"));
+        navigate("/");
+      } catch (error) {
+        console.error("Authentication Error:", error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          const errorCode = error.response.data.error.code;
+          const errorMessage = error.response.data.error.message;
+          if (errorCode === "auth/email-already-in-use") {
+            dispatch(
+              AuthAction.setError(
+                "Email is already in use. Please use a different email."
+              )
+            );
+          } else {
+            dispatch(
+              AuthAction.setError("Authentication Error: " + errorMessage)
+            );
+          }
+        } else {
+          dispatch(
+            AuthAction.setError("Authentication Error: " + error.message)
+          );
+        }
+      } finally {
+        dispatch(stopLoading());
+      }
     }
   };
 
   const forgotPasswordHandler = async () => {
     const email = prompt("Enter your email:");
     if (email) {
-      dispatch(forgotPassword(email, apiToken));
+      await axios.post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${apiToken}`,
+        { requestType: "PASSWORD_RESET", email }
+      );
     }
   };
 

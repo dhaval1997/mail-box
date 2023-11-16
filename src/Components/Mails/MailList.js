@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { openReadingIndex } from "../../Store/generalSlice";
+import { openReadingIndex } from "../../Store/GeneralSlice";
 import HTMLReactParser from "html-react-parser";
 import { useLocation } from "react-router-dom";
 
-const MailList = ({ data, index }) => {
+function MailList({ data, index }) {
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -85,6 +85,6 @@ const MailList = ({ data, index }) => {
       </div>
     </>
   );
-};
+}
 
 export default MailList;

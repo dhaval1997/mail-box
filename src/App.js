@@ -8,18 +8,19 @@ import Trash from "./Pages/Trash";
 import Root from "./Pages/Root";
 import Auth from "./Pages/Auth";
 import Profile from "./Pages/Profile";
-import { logInSuccess } from "./Store/AuthSlice";
+import { AuthAction } from "./Store/AuthSlice";
 import LoadingSpinner from "./Components/Container/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserInfo } from "./Store/authActions";
 
 const App = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.general.isLoading);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("authToken");
+    const storedToken = localStorage.getItem("idToken");
     if (storedToken) {
-      dispatch(logInSuccess({ userInfo: { idToken: storedToken } }));
+      dispatch(getUserInfo(storedToken));
     }
   }, [dispatch]);
   return (
@@ -32,7 +33,7 @@ const App = () => {
           <Route path="/sent" element={<Sent />} />
           <Route path="/drafts" element={<Drafts />} />
           <Route path="/trash" element={<Trash />} />
-          <Route path="/profile" element={<Profile />} />
+          {/* <Route path="/profile" element={<Profile />} /> */}
         </Route>
         <Route path="/auth" element={<Auth />} />
         <Route path="*" element={<Navigate to={"/"} />} />

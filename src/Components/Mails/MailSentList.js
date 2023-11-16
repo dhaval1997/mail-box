@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { openReadingIndex } from "../../Store/generalSlice";
+import { openReadingIndex } from "../../Store/GeneralSlice";
 import HTMLReactParser from "html-react-parser";
 
-const MailSentList = ({ data, index }) => {
+function MailSentList({ data, index }) {
   const dispatch = useDispatch();
 
   return (
@@ -46,6 +46,6 @@ const MailSentList = ({ data, index }) => {
       </div>
     </>
   );
-};
+}
 
 export default MailSentList;
