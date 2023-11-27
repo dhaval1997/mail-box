@@ -15,11 +15,10 @@ function MailRead() {
   const trashMails = useSelector((states) => states.mail.trashMails);
 
   console.log("sentmails: ", sentMails);
-  console.log("inboxMails: ", inboxMails);
   console.log("trashMails: ", trashMails);
+  console.log("inboxMails: ", inboxMails);
   let readingContent;
   if (location.pathname === "/sent") {
-
     readingContent = sentMails[readingIndex][1];
   } else if (location.pathname === "/trash") {
     readingContent = trashMails[readingIndex][1];

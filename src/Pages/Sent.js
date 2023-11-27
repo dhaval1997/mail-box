@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import MailSentList from "../Components/Mails/MailSentList";
-import { getMails } from '../Store/MailAction';
+
 const Sent = () => {
-  const dispatch = useDispatch();
   const sentMails = useSelector((states) => states.mail.sentMails);
 
   const set = new Set();
@@ -19,7 +18,7 @@ const Sent = () => {
   return (
     <>
       <h1 className="headFont row-span-1 text-blue-800 text-xl">Sent</h1>
-      <div className=" row-span-full row-start-2 overflow-y-scroll">
+      <div className=" row-span-full row-start-2 overflow-hidden">
         {DateList.map((item) => {
           return (
             <div key={item}>

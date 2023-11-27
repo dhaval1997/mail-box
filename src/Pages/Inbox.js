@@ -18,7 +18,7 @@ const Inbox = () => {
     <>
       <h1 className="headFont row-span-1 text-blue-800 text-xl">Inbox</h1>
       {console.log(inboxMails)}
-      <div className=" row-span-full row-start-2 overflow-y-scroll">
+      <div className=" row-span-full row-start-2 overflow-hidden">
         {DateList.map((item) => {
           return (
             <div key={item}>

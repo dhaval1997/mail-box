@@ -17,7 +17,7 @@ const Starred = () => {
   return (
     <>
       <h1 className="headFont row-span-1 text-blue-800 text-xl">Favorite</h1>
-      <div className=" row-span-full row-start-2 overflow-y-scroll">
+      <div className=" row-span-full row-start-2 overflow-hidden">
         {DateList.map((item) => {
           return (
             <div key={item}>

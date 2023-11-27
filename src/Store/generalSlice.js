@@ -64,7 +64,6 @@ const GeneralSlice = createSlice({
     openReadingIndex: (state, action) => {
       state.readingIndex = action.payload.index;
       state.isReading = true;
-      state.isNavOpen = false;
     },
     closeReading: (state) => {
       state.isReading = false;

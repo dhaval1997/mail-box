@@ -60,7 +60,7 @@ const AuthForm = () => {
           dispatch(stopLoading());
         }
       } else {
-        alert("Incorrect Confirm Password");
+        alert("Password does not match");
       }
     } else {
       dispatch(startLoading());
@@ -109,10 +109,6 @@ const AuthForm = () => {
               AuthAction.setError(
                 "Email is already in use. Please use a different email."
               )
-            );
-          } else {
-            dispatch(
-              AuthAction.setError("Authentication Error: " + errorMessage)
             );
           }
         } else {
