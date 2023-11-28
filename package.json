@@ -1,7 +1,6 @@
 {
   "name": "mail-box-client",
   "version": "1.0.0",
-  "description": "",
   "scripts": {
     "test": "jest",
     "start": "parcel index.html",
@@ -43,9 +42,9 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "last 2 chrome version",
+      "last 2 firefox version",
+      "last 2 safari version"
     ]
   }
 }
