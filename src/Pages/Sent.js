@@ -12,7 +12,7 @@ const Sent = () => {
       set.add(new Date(item[1].date).toDateString());
     });
     DateList = Array.from(set);
-    console.log(DateList);
+    // console.log(DateList);
   }
 
   return (

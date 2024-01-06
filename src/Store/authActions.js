@@ -9,7 +9,7 @@ export function getUserInfo(idToken) {
     try {
       dispatch(startLoading());
       const reply = await axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDkuC7W8VipjDC9oRGrvuX3WNjasdKX9yQ`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCSn1UD10g4MmeHqeVjTOFRIP00jqDsxwc`,
         { idToken }
       );
 

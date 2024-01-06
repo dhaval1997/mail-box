@@ -14,9 +14,9 @@ function MailRead() {
   const inboxMails = useSelector((states) => states.mail.inboxMails);
   const trashMails = useSelector((states) => states.mail.trashMails);
 
-  console.log("sentmails: ", sentMails);
-  console.log("trashMails: ", trashMails);
-  console.log("inboxMails: ", inboxMails);
+  // console.log("sentmails: ", sentMails);
+  // console.log("trashMails: ", trashMails);
+  // console.log("inboxMails: ", inboxMails);
   let readingContent;
   if (location.pathname === "/sent") {
     readingContent = sentMails[readingIndex][1];

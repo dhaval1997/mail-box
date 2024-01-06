@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   isComposing: false,
+  isNavOpen: true,
   isReading: false,
   editorStartContent: {
     to: "",
@@ -24,6 +25,12 @@ const GeneralSlice = createSlice({
     },
     stopLoading: (state) => {
       state.isLoading = false;
+    },
+    openNav(states) {
+      states.isNavOpen = true;
+    },
+    closeNav(states) {
+      states.isNavOpen = false;
     },
     openCompose: (state) => {
       state.isComposing = true;
@@ -64,6 +71,7 @@ const GeneralSlice = createSlice({
     openReadingIndex: (state, action) => {
       state.readingIndex = action.payload.index;
       state.isReading = true;
+      state.isNavOpen = false;
     },
     closeReading: (state) => {
       state.isReading = false;
@@ -75,6 +83,8 @@ const GeneralSlice = createSlice({
 export const {
   startLoading,
   stopLoading,
+  openNav,
+  closeNav,
   openCompose,
   closeCompose,
   openComposingDraft,

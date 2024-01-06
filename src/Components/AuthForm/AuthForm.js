@@ -146,7 +146,7 @@ const AuthForm = () => {
             style={{ width: "380px" }}
           >
             <h2 className="text-xl text-amber-50 text-center font-semibold">
-              Welcome to your MailBox
+              Welcome to your MailCraft
             </h2>
             <h2 className="text-2xl text-amber-50 text-center font-semibold">
               {isLogging ? "Log In" : "Sign Up"}

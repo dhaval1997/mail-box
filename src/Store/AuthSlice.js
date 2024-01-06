@@ -13,7 +13,7 @@ const initialState = {
     uniqueId: "",
   },
   error: null,
-  apiToken: "AIzaSyDkuC7W8VipjDC9oRGrvuX3WNjasdKX9yQ",
+  apiToken: "AIzaSyCSn1UD10g4MmeHqeVjTOFRIP00jqDsxwc",
 };
 
 const AuthSlice = createSlice({

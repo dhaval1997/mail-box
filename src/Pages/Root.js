@@ -48,7 +48,7 @@ const Root = () => {
         <div className="hidden relative p-2  h-full overflow-hidden col-span-5 bg-zinc-200 bg-opacity-40 rounded-e-lg sm:grid grid-rows-12">
           {!isReading && (
             <div className=" text-slate-800 text-opacity-95 group hover:text-opacity-100 row-start-5 row-span-4 flex flex-col justify-center items-center  p-2 mx-auto">
-              <p className=" mt-1 headFont text-xl font-medium">MailBox</p>
+              <p className=" mt-1 headFont text-xl font-medium">MailCraft</p>
               <p className=" -mt-1 font-medium">Your MailBox</p>
             </div>
           )}

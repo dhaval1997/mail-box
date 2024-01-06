@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const fireBase =
-  "https://react-mailbox-3e595-default-rtdb.firebaseio.com";
+  "https://mail-craft-default-rtdb.asia-southeast1.firebasedatabase.app";
 const initialState = {
   fireBase,
   allMails: [],
